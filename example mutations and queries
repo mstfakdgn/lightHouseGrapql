@@ -37,7 +37,40 @@ mutation {
   }
 }
 
-
+// create writing and attach it to 2 5 4 id users
+mutation {
+  createWriting(
+    input: {
+      title: "My new Writing2"
+      users: {
+        connect: [2, 5, 4]
+      }
+    }
+  ) {
+    id
+    users {
+      name
+    }
+  }
+}
+//create post create author upsert and connect post with 123 users
+mutation {
+  createPost(
+    input: {
+      title: "My new Post"
+      authors: {
+        create: [{ name: "Herbert" }]
+        upsert: [{ id: 2000, name: "Newton" }]
+        connect: [123]
+      }
+    }
+  ) {
+    id
+    authors {
+      name
+    }
+  }
+}
 
 
 

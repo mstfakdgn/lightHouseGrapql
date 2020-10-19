@@ -27,13 +27,41 @@ type Mutation {
   updateUser(id: ID!, name: String, email: String, password: String): User @update
   deleteUser(id: ID!): User @delete
 
-  createWriting(title: String!): Writing! @create
-  updateWriting(title: String): Writing! @update
-  deleteWriting(id: ID!): Writing @delete
-
   createComment(post_id: ID!, reply: String!): Comment @create
   updateComment(id: ID!, reply: String): Comment @update
   deleteComment(id: ID!): Comment @delete
+
+  createWriting(input: CreateWritingInput! @spread): Writing @create
+  updateWriting(title: String): Writing! @update
+  deleteWriting(id: ID!): Writing @delete
+}
+
+input CreateWritingInput {
+  title: String!
+  users: CreateUserBelongsToMany
+}
+
+input CreateUserBelongsToMany {
+  create: [CreateUserInput!]
+  upsert: [UpsertUserInput!]
+  connect: [ID!]
+  sync: [ID!]
+}
+
+input CreateUserInput {
+  name: String!
+  email: String!
+  password: String!
+  created_at: DateTime
+  updated_at: DateTime
+}
+
+input UpsertUserInput {
+  id: ID!
+  name: String
+  email: String
+  created_at: DateTime
+  updated_at: DateTime
 }
 
 type User {

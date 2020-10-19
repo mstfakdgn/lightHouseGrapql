@@ -16,7 +16,7 @@ class Writing extends Model
      * @var array
      */
     protected $fillable = [
-        'title'
+        'title','user_id'
     ];
 
     public function users(): BelongsToMany
