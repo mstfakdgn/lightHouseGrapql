@@ -1,0 +1,70 @@
+mutation {
+  createPost(author_id:1, title:"post2", content:"asdasdasdasdasdasdasasd") {
+    id
+    title
+    content
+    author {
+      id
+      name
+      email
+    }
+  }
+}
+
+mutation {
+  updatePost(id:1, title:"updatedTitle", content:"updated", author_id:3) {
+    id
+    title
+    content
+    author {
+      id
+      name
+      email
+    }
+  }
+}
+
+mutation {
+  deletePost(id:1) {
+    id
+    title
+    content
+    author {
+      id
+      name
+      email
+    }
+  }
+}
+
+
+
+
+
+
+{
+  comments {
+    id
+    reply
+    post {
+      title
+      content
+      author {
+        name
+        email
+      }
+    }
+  }
+}
+
+{
+  posts {
+    id
+    title
+    content
+    author {
+      name
+      email
+    }
+  }
+}

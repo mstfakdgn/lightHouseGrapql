@@ -1,0 +1,69 @@
+"A date string with format `Y-m-d`, e.g. `2011-05-23`."
+scalar Date @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date")
+
+"A datetime string with format `Y-m-d H:i:s`, e.g. `2018-05-23 13:43:32`."
+scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
+
+type Query {
+    posts: [Post!]! @all
+    post(id: Int! @eq): Post @find
+
+    writings: [Writing!]! @all
+    writing(id: Int! @eq): Writing @find
+
+    users: [User!]! @all
+    user(id: Int! @eq): User @find
+
+    comments: [Comment!]! @all
+    comment(id: Int! @eq): Comment @find
+}
+
+type Mutation {
+  createPost(author_id: ID!, title: String!, content: String!): Post @create
+  updatePost(id: ID!, title: String, content: String, author_id: ID): Post @update
+  deletePost(id: ID!): Post @delete
+
+  createUser(name: String!, email: String!, password: String!): User! @create
+  updateUser(id: ID!, name: String, email: String, password: String): User @update
+  deleteUser(id: ID!): User @delete
+
+  createWriting(title: String!): Writing! @create
+  updateWriting(title: String): Writing! @update
+  deleteWriting(id: ID!): Writing @delete
+
+  createComment(post_id: ID!, reply: String!): Comment @create
+  updateComment(id: ID!, reply: String): Comment @update
+  deleteComment(id: ID!): Comment @delete
+}
+
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  created_at: DateTime!
+  updated_at: DateTime!
+  posts: [Post!]! @hasMany
+}
+
+type Post {
+  id: ID!
+  title: String!
+  content: String!
+  author: User! @belongsTo
+  comments: [Comment!]! @hasMany
+}
+
+type Comment {
+  id: ID!
+  reply: String!
+  post: Post! @belongsTo
+}
+
+type Writing {
+  id: ID!
+  title: String!
+  users: [User!]! @belongsToMany
+}
+
+
+
